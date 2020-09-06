@@ -68,7 +68,7 @@ func trackDetailsFromSDP(log logging.LeveledLogger, s *sdp.SessionDescription) m
 							continue
 						}
 						rtxRepairFlows[uint32(rtxRepairFlow)] = true
-						delete(incomingTracks, uint32(rtxRepairFlow)) // Remove if rtx was added as track before
+						//delete(incomingTracks, uint32(rtxRepairFlow)) // Remove if rtx was added as track before
 					}
 				}
 

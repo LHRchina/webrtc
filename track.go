@@ -202,7 +202,11 @@ func (t *Track) determinePayloadType() error {
 	}
 
 	t.mu.Lock()
-	t.payloadType = r.PayloadType
+	if r.PayloadType == 97 {
+		t.payloadType = 96
+	} else {
+		t.payloadType = r.PayloadType
+	}
 	defer t.mu.Unlock()
 
 	return nil

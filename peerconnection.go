@@ -1068,6 +1068,24 @@ func (pc *PeerConnection) drainSRTP() {
 				pc.startReceiver(incoming, t.Receiver())
 				return true
 			}
+			if len(remoteDescription.parsed.MediaDescriptions) == 2 {
+				incoming := trackDetails{
+					mid:   "1",
+					ssrc:  ssrc,
+					kind:  RTPCodecTypeVideo,
+					label: "rtx",
+				}
+
+				t, err := pc.AddTransceiverFromKind(incoming.kind, RtpTransceiverInit{
+					Direction: RTPTransceiverDirectionRecvonly,
+				})
+				if err != nil {
+					pc.log.Warnf("Could not add transceiver for remote SSRC %d: %s", ssrc, err)
+					return false
+				}
+				pc.startReceiver(incoming, t.Receiver())
+				return true
+			}
 		}
 
 		return false
